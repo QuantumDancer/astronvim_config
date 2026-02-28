@@ -1,0 +1,57 @@
+-- Based on https://github.com/AstroNvim/astrocommunity/blob/main/lua/astrocommunity/pack/terraform/init.lua
+-- but with trivy instead ot tfsec
+return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    optional = true,
+    opts = function(_, opts)
+      if opts.ensure_installed ~= "all" then
+        opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "terraform" })
+      end
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "terraformls" })
+    end,
+  },
+  {
+    "jay-babu/mason-null-ls.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "tflint", "trivy" })
+    end,
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.ensure_installed =
+        require("astrocore").list_insert_unique(opts.ensure_installed, { "terraform-ls", "tflint", "trivy" })
+    end,
+  },
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        tf = { "terraform_fmt" },
+        terraform = { "terraform_fmt" },
+        ["terraform-vars"] = { "terraform_fmt" },
+      },
+    },
+  },
+  {
+    "mfussenegger/nvim-lint",
+    optional = true,
+    opts = {
+      linters_by_ft = {
+        tf = { "tflint", "trivy" },
+        terraform = { "tflint", "trivy" },
+        ["terraform-vars"] = { "tflint", "trivy" },
+      },
+    },
+  },
+}
