@@ -2,16 +2,11 @@
 -- but with trivy instead ot tfsec
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    optional = true,
-    opts = function(_, opts)
-      if opts.ensure_installed ~= "all" then
-        opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "terraform" })
-      end
-    end,
+    "AstroNvim/astrocore",
+    opts = { treesitter = { ensure_installed = { "terraform" } } },
   },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     optional = true,
     opts = function(_, opts)
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "terraformls" })
