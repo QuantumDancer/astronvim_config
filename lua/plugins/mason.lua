@@ -20,8 +20,11 @@ return {
         -- install debuggers
         "debugpy",
 
-        -- install any other package
-        "tree-sitter-cli",
+        -- Deliberately no "tree-sitter-cli": every prebuilt tree-sitter binary
+        -- (Mason's included) needs glibc >= 2.35, and RHEL 9 has 2.34. Mason's
+        -- bin dir shadows PATH inside nvim, so installing it here would hide the
+        -- working system CLI behind one that cannot run. Let AstroCore fall back
+        -- to the system tree-sitter instead (EPEL on RHEL, dnf/brew elsewhere).
       },
     },
   },
